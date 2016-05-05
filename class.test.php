@@ -1,7 +1,7 @@
 <?php
 class Test {
-  public $passes = 0;
-  public $fails = 0;
+  private $passes = 0;
+  private $fails = 0;
   const token_chars = "abcdefghijklmnopqrstuvwxyz0123456789";
   public function expect($condition, $msg = "Value was not what was expected") {
     if ($condition) {
