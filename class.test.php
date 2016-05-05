@@ -84,6 +84,12 @@ class Test {
     document.getElementById('console_$uniq_id').style.border = '5px solid " . (($this->passes > 0 && $this->fails === 0) ? "lime" : "red") . "';
     </script>";
   }
+  public function it($description, $tests) {
+    echo "<strong>$description</strong>";
+    echo "<div style='margin-left:20px'>";
+    $tests();
+    echo "</div>";
+  }
   public function random_number() {
     return rand(0, 100);
   }

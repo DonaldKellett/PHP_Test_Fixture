@@ -471,7 +471,104 @@
     ?>
     <h3>it (in conjunction with describe) <b style="color:rgb(200,200,0)"><u>NEW!</u></b></h3>
     <?php
+    $test = new Test;
+    $test->describe("Introducing the 'it' wrapper test block", function () {
+      $GLOBALS['test']->it("Displaying 'it' block with no test cases", function () {
+        echo "And ... we're finally in the 'it' wrapper test block!  How cool is that?<br />";
+        echo "'it' blocks, when used in conjunction with 'describe' blocks, can really help a lot to properly display your test cases in a simple and structured manner.<br />";
+        echo "The standard usage of 'describe' and 'it' blocks are as follows:<br />";
+        echo "<ol>";
+        echo "<li>'describe' blocks, as its name suggests, are used to <strong>describe</strong> what your group of test cases will be about or what function/method you are testing.  For example, if you are planning to test a function <code>multiply(a, b)</code> that multiplies two numbers, the title of your describe block could be something along the lines of 'The multiply(a, b) function'</li>";
+        echo "<li>'it' blocks, on the other hand, should be used to describe what <strong>aspects</strong> of the function/method in question the particular (sub)group of tests are going to test.  For example, in the 'it' block, if you want to test positive integers only, your title for the 'it' block should be 'should work for positive integers'.  In another 'it' block in the same 'describe' block, if you are planning to test negative float values, the title for that particular block should be 'should work for negative floats (too)'</li>";
+        echo "<ol/>";
+      });
+      $GLOBALS['test']->it("Yet another 'it' block within the same 'describe' block", function () {
+        echo "See?  I told you you could include multiple 'if' blocks in your main 'describe' block.<br />";
+        echo "Different 'if' blocks in the same 'describe' block should be testing the same function/method/algorithm/etc.<br />";
+      });
+      $GLOBALS['test']->it("Yet another 'it' block within the same 'describe' block", function () {
+        echo "See?  I told you you could include multiple 'if' blocks in your main 'describe' block.<br />";
+        echo "Different 'if' blocks in the same 'describe' block should be testing the same function/method/algorithm/etc.<br />";
+      });
+      $GLOBALS['test']->it("Yet another 'it' block within the same 'describe' block", function () {
+        echo "See?  I told you you could include multiple 'if' blocks in your main 'describe' block.<br />";
+        echo "Different 'if' blocks in the same 'describe' block should be testing the same function/method/algorithm/etc.<br />";
+      });
+      $GLOBALS['test']->it("Yet another 'it' block within the same 'describe' block", function () {
+        echo "See?  I told you you could include multiple 'if' blocks in your main 'describe' block.<br />";
+        echo "Different 'if' blocks in the same 'describe' block should be testing the same function/method/algorithm/etc.<br />";
+      });
+    });
 
+    echo "<br />";
+
+    $test = new Test;
+    $test->describe("The 'it' block in conjunction with the 'describe' block", function () {
+      $GLOBALS['test']->it("should work for all passing test cases (expect)", function () {
+        $GLOBALS['test']->expect(true);
+        $GLOBALS['test']->expect(1);
+        $GLOBALS['test']->expect("bacon");
+        $GLOBALS['test']->expect("Hello World");
+        $GLOBALS['test']->expect(!false);
+        $GLOBALS['test']->expect(!0);
+        $GLOBALS['test']->expect(!"");
+      });
+      $GLOBALS['test']->it("should work for all passing test cases (assert_equals)", function () {
+        $GLOBALS['test']->assert_equals(-1, -1);
+        $GLOBALS['test']->assert_equals(0, 0);
+        $GLOBALS['test']->assert_equals(1, 1);
+        $GLOBALS['test']->assert_equals(2, 2);
+        $GLOBALS['test']->assert_equals(3, 3);
+        $GLOBALS['test']->assert_equals(true, true);
+        $GLOBALS['test']->assert_equals(false, false);
+        $GLOBALS['test']->assert_equals("bacon", "bacon");
+        $GLOBALS['test']->assert_equals("Hello World", "Hello World");
+      });
+      $GLOBALS['test']->it("should work for all passing test cases (assert_not_equals)", function () {
+        $GLOBALS['test']->assert_not_equals(1, 0, "EPIC FAIL!!!");
+        $GLOBALS['test']->assert_not_equals(0, 1, "EPIC FAIL!!!");
+        $GLOBALS['test']->assert_not_equals(true, false, "EPIC FAIL!!!");
+        $GLOBALS['test']->assert_not_equals(false, true, "EPIC FAIL!!!");
+        $GLOBALS['test']->assert_not_equals("bacon", "Hello World", "EPIC FAIL!!!");
+        $GLOBALS['test']->assert_not_equals("Hello World", "bacon", "EPIC FAIL!!!");
+      });
+    });
+
+    echo "<br />";
+
+    $test = new Test;
+    $test->describe("The 'it' block in conjunction with the 'describe' block", function () {
+      $GLOBALS['test']->it("should work for some failing test cases (expect)", function () {
+        $GLOBALS['test']->expect(true);
+        $GLOBALS['test']->expect(1);
+        $GLOBALS['test']->expect("bacon");
+        $GLOBALS['test']->expect("Hello World");
+        $GLOBALS['test']->expect(!false);
+        $GLOBALS['test']->expect(0);
+        $GLOBALS['test']->expect(!0);
+        $GLOBALS['test']->expect(!"");
+      });
+      $GLOBALS['test']->it("should work for all passing test cases (assert_equals)", function () {
+        $GLOBALS['test']->assert_equals(-1, -1);
+        $GLOBALS['test']->assert_equals(0, 0);
+        $GLOBALS['test']->assert_equals(1, 1);
+        $GLOBALS['test']->assert_equals(2, 2);
+        $GLOBALS['test']->assert_equals(3, 3);
+        $GLOBALS['test']->assert_equals(true, true);
+        $GLOBALS['test']->assert_equals(false, false);
+        $GLOBALS['test']->assert_equals("bacon", "bacon");
+        $GLOBALS['test']->assert_equals("Hello World", "Hello World");
+      });
+      $GLOBALS['test']->it("should work for some failing test cases (assert_not_equals)", function () {
+        $GLOBALS['test']->assert_not_equals(1, 0, "EPIC FAIL!!!");
+        $GLOBALS['test']->assert_not_equals(0, 1, "EPIC FAIL!!!");
+        $GLOBALS['test']->assert_not_equals(true, false, "EPIC FAIL!!!");
+        $GLOBALS['test']->assert_not_equals(false, true, "EPIC FAIL!!!");
+        $GLOBALS['test']->assert_not_equals("Goodbye World", "Goodbye World", "Should return 'Hello World' instead of 'Goodbye World'");
+        $GLOBALS['test']->assert_not_equals("bacon", "Hello World", "EPIC FAIL!!!");
+        $GLOBALS['test']->assert_not_equals("Hello World", "bacon", "EPIC FAIL!!!");
+      });
+    });
     ?>
     <h2>Misc</h2>
     <h3>random_number <b style="color:rgb(200,200,0)"><u>NEW!</u></b></h3>
