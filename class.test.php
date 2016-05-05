@@ -71,6 +71,19 @@ class Test {
       }
     }
   }
+  public function describe($description, $tests) {
+    $uniq_id = $this->random_token();
+    echo "<div id='console_$uniq_id' style='color:white;background-color:black;padding:10px;font-family:monospace'>";
+    echo "<strong>$description</strong>";
+    echo "<div id='describe_$uniq_id' style='margin-left:20px'>";
+    $tests();
+    echo "</div>";
+    $this->summarize();
+    echo "</div>";
+    echo "<script>
+    document.getElementById('console_$uniq_id').style.border = '5px solid " . (($this->passes > 0 && $this->fails === 0) ? "lime" : "red") . "';
+    </script>";
+  }
   public function random_number() {
     return rand(0, 100);
   }

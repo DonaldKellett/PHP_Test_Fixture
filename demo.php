@@ -401,7 +401,73 @@
     <h2>Spec Methods</h2>
     <h3>describe <b style="color:rgb(200,200,0)"><u>NEW!</u></b></h3>
     <?php
+    $test = new Test;
+    $test->describe("Displaying 'describe' block with no test cases", function () {
+      echo "Hello World<br />";
+      echo "This is an example of a standalone 'describe' block with no test cases<br />";
+      echo "Cool, huh?<br />";
+      echo "One advantage of using a 'describe' block to nest your test cases is that the test cases are displayed properly in a 'console window'<br />";
+      echo "Another advantage of using a 'describe' block is that you do not have to worry about printing a summary of your test cases at all because the 'describe' block does it for you!<br />";
+    });
 
+    echo "<br />";
+
+    $test = new Test;
+    $test->describe("Displaying a 'describe' block with only passing test cases", function () {
+      $GLOBALS['test']->expect(true);
+      $GLOBALS['test']->expect(1);
+      $GLOBALS['test']->expect("bacon");
+      $GLOBALS['test']->expect("Hello World");
+      $GLOBALS['test']->expect(!false);
+      $GLOBALS['test']->expect(!0);
+      $GLOBALS['test']->expect(!"");
+      $GLOBALS['test']->assert_equals(-1, -1);
+      $GLOBALS['test']->assert_equals(0, 0);
+      $GLOBALS['test']->assert_equals(1, 1);
+      $GLOBALS['test']->assert_equals(2, 2);
+      $GLOBALS['test']->assert_equals(3, 3);
+      $GLOBALS['test']->assert_equals(true, true);
+      $GLOBALS['test']->assert_equals(false, false);
+      $GLOBALS['test']->assert_equals("bacon", "bacon");
+      $GLOBALS['test']->assert_equals("Hello World", "Hello World");
+      $GLOBALS['test']->assert_not_equals(1, 0, "EPIC FAIL!!!");
+      $GLOBALS['test']->assert_not_equals(0, 1, "EPIC FAIL!!!");
+      $GLOBALS['test']->assert_not_equals(true, false, "EPIC FAIL!!!");
+      $GLOBALS['test']->assert_not_equals(false, true, "EPIC FAIL!!!");
+      $GLOBALS['test']->assert_not_equals("bacon", "Hello World", "EPIC FAIL!!!");
+      $GLOBALS['test']->assert_not_equals("Hello World", "bacon", "EPIC FAIL!!!");
+    });
+
+    echo "<br />";
+
+    $test = new Test;
+    $test->describe("Displaying a 'describe' block with mainly passing test cases and a few failing ones", function () {
+      $GLOBALS['test']->expect(true);
+      $GLOBALS['test']->expect(1);
+      $GLOBALS['test']->expect("bacon");
+      $GLOBALS['test']->expect("Hello World");
+      $GLOBALS['test']->expect(false);
+      $GLOBALS['test']->expect(!false);
+      $GLOBALS['test']->expect(!0);
+      $GLOBALS['test']->expect(!"");
+      $GLOBALS['test']->assert_equals(-1, -1);
+      $GLOBALS['test']->assert_equals(0, 0);
+      $GLOBALS['test']->assert_equals(1, 1);
+      $GLOBALS['test']->assert_equals(2, 2);
+      $GLOBALS['test']->assert_equals(3, 3);
+      $GLOBALS['test']->assert_equals("Hello World", "hello world");
+      $GLOBALS['test']->assert_equals(true, true);
+      $GLOBALS['test']->assert_equals(false, false);
+      $GLOBALS['test']->assert_equals("bacon", "bacon");
+      $GLOBALS['test']->assert_equals("Hello World", "Hello World");
+      $GLOBALS['test']->assert_not_equals(1, 0, "EPIC FAIL!!!");
+      $GLOBALS['test']->assert_not_equals(0, 1, "EPIC FAIL!!!");
+      $GLOBALS['test']->assert_not_equals(true, false, "EPIC FAIL!!!");
+      $GLOBALS['test']->assert_not_equals(false, true, "EPIC FAIL!!!");
+      $GLOBALS['test']->assert_not_equals("Hello World", "Hello World");
+      $GLOBALS['test']->assert_not_equals("bacon", "Hello World", "EPIC FAIL!!!");
+      $GLOBALS['test']->assert_not_equals("Hello World", "bacon", "EPIC FAIL!!!");
+    });
     ?>
     <h3>it (in conjunction with describe) <b style="color:rgb(200,200,0)"><u>NEW!</u></b></h3>
     <?php
