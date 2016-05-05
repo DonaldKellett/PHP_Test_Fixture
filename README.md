@@ -1,85 +1,177 @@
 # PHP Test Fixture
 
+## Version Details
+
+- Current Version: ```v2.0.0```
+- License: None (Open Source)
+
 ## Overview
 
-This is my very first attempt at using object-oriented programming (OOP) in PHP to (try to) create something (vaguely) useful.  For this reason, I sincerely apologise if this mini-project is below standard.
+PHP Test Fixture Version II is finally here!  The PHP Test Fixture (as authored by [DonaldKellett](https://github.com/DonaldKellett)) is a simple and minimalistic test fixture programmed in the PHP scripting language for use by PHP developers to check their code and algorithms efficiently and effectively.
 
-In this mini project, I also started using the ternary operator (```(condition) ? true_value : false_value;```) in ```echo```, ```return``` and variable assignment statements instead of the usual if/else statements.  Once I understood how the ternary operator behaved and how to use multiple such operators in a single statement, my code looked much more clean and concise (at least in my opinion) - if/else statements that usually took almost ten lines of code were reduced to a single line of code.
+Version II of this test fixture (the newest released version as of the time of writing) includes a few new surprises:
 
-This PHP test fixture is designed for testing algorithms and complex functions (in PHP, obviously).  For example, if you have created your own filter (like the built in ```filter_var($str, FILTER_SANITIZE_STRING);``` for example) and would like to make sure that your filter is working properly and returning the correct output, you could use this test fixture to confirm that it is working properly.
+1. The ability to expect an error and no error to be thrown from the tested function/algorithm/code by using the ```expect_error``` and ```expect_no_error``` methods in your test fixture respectively.
+2. The ability to effectively group and style your test cases properly with the ```describe``` and ```it``` methods
+3. The ability to generate random numbers and strings for random testing (should you need it) using the ```random_number``` and ```random_token``` methods respectively
 
-## Usage
+... and **enhanced** feedback messages for both ```assert_equals``` and ```assert_not_equals``` upon both success and failure.
 
-In order to use this PHP Test Fixture (Algorithm Tester), you will have to first ```require``` the ```class.test.php``` file.
+## Documentation
+
+### Initialization
+
+To use this PHP test fixture, simply follow the steps below:
+
+1. Add the line ```require 'class.test.php';``` in your PHP code (preferably at the start of your PHP file) to include the ```Test``` class
+2. To start using the class, create an instance of ```Test``` (e.g. ```$test = new Test;```)
+3. Refer to the documentation below for the full list of available methods to test your function/algorithm/code :D
+
+### Assertion Methods (Pass/Fail)
+
+#### expect
+
+This is the most basic of all assertion methods and can be used to check for certain conditions.  Its arguments list is as follows:
 
 ```php
-require "/path/to/your/class.test.php";
+$test->expect($condition[, $msg]);
 ```
 
-Then, to start using it, just create a new instance of ```Test```.  *As of 06/02/16, the test fixture has no ```__construct()``` function/method so you cannot configure the tester upon initialisation.*
+The ```expect``` method expects a boolean value (required) as its first argument and *optionally* accepts a string value as its second argument.  The method then evaluates the boolean (or converts the value into a boolean before evaluating if the value is not a boolean).  If the boolean evaluates to ```true``` (or if the value provided is "truthy"), the test is passed and ```Test Passed``` is printed to the screen (along with a line break).  If the boolean evaluates to ```false``` (or if a "falsy" value is provided) the test fails and an error message is printed to the screen (```$msg``` will be printed instead if it is provided as an argument).
+
+E.g.
 
 ```php
-$test = new Test();
+$test = new Test;
+$test->expect(true); // Test Passed
+$test->expect(false); // Value was not what was expected
+$test->expect(1); // Test Passed
+$test->expect(0); // Value was not what was expected
+$test->expect(0, "Was expecting a truthy value here"); // Was expected a truthy value here
+$test->expect(1, "Was expecting a truthy value here"); // Test Passed
 ```
 
-Once your test fixture is initialised, there are three methods you can use to test your function or algorithm.  You can use them for an unlimited number of times and for an unlimited number of cases.  **Note that the test fixture can only be used to test ```return``` values so for example it cannot test whether the ```echo``` statements in your function has worked.**
+#### assert_equals
+
+This method accepts the following arguments in the following order.  Any arguments in square brackets ```[]``` are optional.
 
 ```php
-$test->expect($boolean[, $optional_msg_upon_failure]);
-$test->assert_equals($actual, $expected[, $optional_msg_upon_failure]);
-$test->assert_not_equals($actual, $expected[, $optional_msg_upon_failure]);
+$test->assert_equals($actual, $expected[, $msg]);
 ```
 
-In the ```assert_equals()``` and ```assert_not_equals()``` methods, please note that although value comparison works in both directions, **the order of the actual and expected values *does matter***.  This is because if the test is passed, no difference in behaviour is observed, but *if the test does not pass*, the resulting error message becomes very confusing.  In the case of a fail, the test fixture returns the following error: ```Expected: "correct_result", but instead got: "actual_result"```.  If the arguments are swapped and there is an error, the error message will say that your (incorrect) result is the one the fixture expected but the (actual) correct result is what it got.  This would hamper your ability (or the ability of the user) to debug your code which would defeat the very purpose of using this framework to test your algorithms.  In fact, if the arguments are swapped and a confusing error message occurs, you're probably better off not using this fixture.
+Please note that **the order of actual and expected values passed in is VERY important**.  Although swapping the order of the values will not cause an error, it will produce confusing feedback messages upon failure which will hamper the TDD process.
 
-When the test is complete you can ask the test fixture to print a summary of the tests by calling the following method.
-
-```php
-$test->print_summary();
-```
-
-This will print something like:
-
-<p style="color:green;font-weight:bold;">18 Passed</p>
-<p style="color:red;font-weight:bold;">2 Failed</p>
-<p style="color:red;font-weight:bold;">Algorithm did not pass - try again</p>
-
-*Note: The ```print_summary()``` method returns no value - it just ```echo```es the result onto the page.*
-
-If your algorithm passes all of the tests you have devised, the final line at the bottom will read, "Algorithm Passed".  If there is 1 single failure in any of the tests you have devised, the test fixture will say that your algorithm has failed (as above).  If you do not provide any test cases before printing the summary, the test fixture will simply return an error.
-
-**It is highly recommended to create a new instance of ```Test``` every time you test a new function/algorithm.  This way, there is no ambiguity as to which algorithm(s) passed and which algorithm(s) failed and which pass/fail belongs to which algorithm.**
-
-## Customisation
-
-Since the ```Test``` class does not contain a ```__construct``` method, you cannot define any settings of the test fixture during initialisation.  For this reason, if you want to customise the behaviour of your own test fixture for your own purposes, it is highly recommended to create your own Test class (e.g. ```ImprovedTest```, see the ```extensions/``` folder) that inherits from the original ```Test``` class and add your own methods or redefine some of the built-in methods.
-
-For example, the ```print_summary()``` method in the original ```Test``` class has no return value - it just ```echo```es the results onto your page.  In some cases, this may be rather inconvenient as you may want to add your own message(s) or HTML on top of the summary report depending on whether the algorithm has passed the test, which is made impossible by the lack of a return value.  If you go to the ```extensions/``` directory and open ```class.improvedtest.php```, you will see the ```print_summary()``` method redefined as follows:
+E.g.
 
 ```php
-public function print_summary() {
-  echo ($this->passes > 0 || $this->fails > 0) ? "<p style='color:green;font-weight:bold;'>$this->passes Passed</p><p style='color:red;font-weight:bold;'>$this->fails Failed</p>" . (($this->fails === 0) ? "<p style='color:green;font-weight:bold;'>Algorithm Passed</p>" : "<p style='color:red;font-weight:bold;'>Algorithm did not pass - try again</p>") : "<p style='color:red;font-weight:bold;'>Error: No test cases provided; must provide at least 1 to validate algorithm</p>";
-  // Add a return value so further actions can be performed according to outcome
-  return ($this->passes > 0 && $this->fails === 0) ? true : false;
+$test = new Test;
+function multiply(a, b) {
+  // A working function that multiplies two numbers together
+  return a * b;
 }
+$test->assert_equals(multiply(3, 5), 15, "Function should return 15"); // Test Passed - Value === 15
+$test->assert_equals(multiply(4, 7), 28, "Function should return 28"); // Test Passed - Value === 28
+$test->assert_equals(multiply(9, 9), 81); // Test Passed - Value === 81
+function buggy_multiply(a, b) {
+  // Oops, it seems like there is a typo here and exponentation is done instead of multiplication
+  return a ** b;
+}
+$test->assert_equals(multiply(4, 4), 16); // Value did not match expected - Expected: 16, but instead got: 256
 ```
 
-By adding a conditional return value at the end of the function, the return value can first be stored in a variable:
+#### assert_not_equals
 
 ```php
-$algorithm_passed = $test->print_summary();
+$test->assert_not_equals($actual, $expected[, $msg]);
 ```
 
-Then, the value of the variable can be checked in a conditional statement and you can ```echo``` the corresponding output depending on whether the algorithm has passed or not.
+This method passes a test if the actual values does **not** match the expected value, otherwise it fails.
 
-## Contribution
+E.g.
 
-Of course, if you want to customise the Test Fixture, the more obvious solution would be to edit the ```Test``` class directly.  If you think you have made a significant improvement to my Test Fixture by doing so, feel free to create an issue or pull request.  Once I test it out and approve it, I will use your version (or a variant thereof) in this official repository.
+```php
+$test = new Test;
+function multiply(a, b) {
+  return a * b;
+}
+// Here we try to make sure the function is returning the product of two numbers, not the exponentation of two numbers
+$test->assert_not_equals(multiply(4, 4), 256); // Test Passed - Value !== 256
+```
 
-## License
+#### expect_error
 
-No License.  This project is Open Source.  This project can also be found at Codewars as a Kumite.
+This method expects a custom message upon failure and an anonymous function to be executed to check for errors.  The test is passed if an error is thrown in the tested code and fails otherwise.
+
+```php
+$test->expect_error($msg, $fn);
+```
+
+*Note: The error thrown must be an ```Exception```; otherwise, the PHP code itself will fail.*
+
+#### expect_no_error
+
+```php
+$test->expect_no_error($msg, $fn);
+```
+
+Basically the opposite of ```expect_error``` - a test is passed if no error is thrown.  If an error is thrown, the test is failed.  Again, the ```$msg``` parameter is **required** in this case.
+
+### Grouping/Styling Methods
+
+#### describe
+
+A handy method used to group a series of relevant test cases into a professionally styled "console" which also summarizes the results of the test cases involved effectively by the border-color of the console depending on whether all test cases are passed.
+
+Syntax:
+
+```php
+$test->describe($description, $tests);
+```
+
+```$description``` is a string describing what the test cases do, while ```$tests``` is the anonymous function passed in where the test cases are evaluated.
+
+E.g.
+
+```php
+$test = new Test;
+$test->describe("My awesome test cases for the 'multiply' function", function () {
+  // NOTE: In the anonymous function, your test fixture (i.e. $test in this example) must be referenced through the $GLOBALS variable due to the nature of PHP; otherwise, the script will fail
+  $GLOBALS['test']->assert_equals(multiply(3, 5), 15);
+  $GLOBALS['test']->assert_equals(multiply(4, 7), 28);
+  $GLOBALS['test']->assert_equals(multiply(9, 9), 81);
+});
+```
+
+#### it
+
+Used to further group a series of test cases into subsections.  Must be used in conjunction with ```describe``` for maximum styling effect.
+
+Syntax:
+
+```php
+$test->describe("Description Here", function () {
+  // NOTE: $test->it should ideally be wrapped in a $test->describe block; otherwise the contents may not display properly
+  $test->it($description, $tests);
+});
+```
+
+Again, ```$description``` is a string detialing what is tested while ```$tests``` are the tests to be executed in the anonymous function.
+
+### Miscellaneous
+
+### random_number
+
+Accepts no arguments.  Returns a randomly generated integer between ```0``` and ```100``` inclusive.
+
+### random_token
+
+Accepts no arguments.  Returns a randomly generated string of length ```8``` to ```10``` (inclusive) that includes only lowercase letters and the digits ```0-9``` (this can be changed by editing the ```Test::token_chars``` constant)
+
+### Coming Soon (not in v2.0.0)
+
+1. ```assert_similar``` (to be used for array comparison)
+2. ```assert_not_similar``` (to be used for array comparison)
 
 ## Credits
 
-Credits to [Codewars](http://codewars.com) for inspiring me to create this PHP Test Fixture.  I really hope PHP Kata will be supported by Codewars soon :)
+Credits goes to [Codewars](http://www.codewars.com) as the test fixtures used in their site (especially the Javascript version of the test fixture) are my source of inspiration for creating this test fixture for the PHP language.  That being said, I really do hope Codewars will support PHP soon :D
