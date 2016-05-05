@@ -1,7 +1,7 @@
 <?php
 class Test {
-  private $passes = 0;
-  private $fails = 0;
+  protected $passes = 0;
+  protected $fails = 0;
   const token_chars = "abcdefghijklmnopqrstuvwxyz0123456789";
   public function expect($condition, $msg = "Value was not what was expected") {
     if ($condition) {
@@ -11,6 +11,7 @@ class Test {
     } else {
       $this->fails++;
       echo "<span style='color:red'>$msg</span><br />";
+      return false;
     }
   }
   public function assert_equals($actual, $expected, $msg = "Value did not match expected") {
@@ -111,6 +112,15 @@ class Test {
       echo ($this->fails === 0 ? "<span style='color:lime'>Algorithm Passed</span>" : "<span style='color:red'>Algorithm Failed</span>") . "<br />";
       return $this->fails === 0;
     }
+  }
+  public function get_passes() {
+    return $this->passes;
+  }
+  public function get_fails() {
+    return $this->fails;
+  }
+  public function algorithm_passed() {
+    return $this->passes > 0 && $this->fails === 0;
   }
 }
 ?>
