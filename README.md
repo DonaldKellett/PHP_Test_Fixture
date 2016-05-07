@@ -19,6 +19,8 @@ Version II of this test fixture (the newest released version as of the time of w
 
 ## Documentation
 
+*Note: All features specified in this documentation are available from ```v2.0.0``` onwards unless otherwise specified.*
+
 ### Initialization
 
 To use this PHP test fixture, simply follow the steps below:
@@ -151,7 +153,7 @@ Syntax:
 ```php
 $test->describe("Description Here", function () {
   // NOTE: $test->it should ideally be wrapped in a $test->describe block; otherwise the contents may not display properly
-  $test->it($description, $tests);
+  $GLOBALS['test']->it($description, $tests);
 });
 ```
 
@@ -166,11 +168,6 @@ Accepts no arguments.  Returns a randomly generated integer between ```0``` and 
 ### random_token
 
 Accepts no arguments.  Returns a randomly generated string of length ```8``` to ```10``` (inclusive) that includes only lowercase letters and the digits ```0-9``` (this can be changed by editing the ```Test::token_chars``` constant)
-
-### Coming Soon (not in v2.0.0)
-
-1. ```assert_similar``` (to be used for array comparison)
-2. ```assert_not_similar``` (to be used for array comparison)
 
 ## Credits
 
