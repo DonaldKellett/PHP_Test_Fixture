@@ -2,7 +2,7 @@
 
 ## Version Details
 
-- Current Version: ```v2.0.0```
+- Current Version: ```v2.1.0```
 - License: None (Open Source)
 
 ## Overview
