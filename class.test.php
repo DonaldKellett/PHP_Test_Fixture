@@ -72,6 +72,27 @@ class Test {
       }
     }
   }
+  public function assert_similar($actual, $expected, $msg = "Actual value did not match Expected") {
+    if ($this->check_similar($actual, $expected)) {
+      $this->passes++;
+      echo "<span style='color:lime'>Test Passed - Value === $expected</span><br />";
+      return true;
+    } else {
+      $this->fails++;
+      echo "<span style='color:red'>$msg - Expected: $expected, but instead got: $actual</span><br />";
+      return false;
+    }
+  }
+  protected function check_similar($actual, $expected) {
+    if (!is_array($expected) || !is_array($actual)) return $actual === $expected;
+    foreach ($expected as $key => $value) {
+      if (!$this->check_similar($actual[$key], $expected[$key])) return false;
+    }
+    foreach ($actual as $key => $value) {
+      if (!$this->check_similar($actual[$key], $expected[$key])) return false;
+    }
+    return true;
+  }
   public function describe($description, $tests) {
     $uniq_id = $this->random_token();
     echo "<div id='console_$uniq_id' style='color:white;background-color:black;padding:10px;font-family:monospace'>";
