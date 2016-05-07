@@ -1373,7 +1373,583 @@
     ?>
     <h3>assert_not_similar</h3>
     <?php
+    $test = new Test;
+    $test->describe('$test->assert_not_similar($actual, $expected[, $msg])', function () {
+      $GLOBALS['test']->it("should work for passing tests with the default message", function () {
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array())))), array(array(array(array(array(array()))))));
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(1))))), array(array(array(array(array(array(1)))))));
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(0))))), array(array(array(array(array(array(0)))))));
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(true))))), array(array(array(array(array(array(true)))))));
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(false))))), array(array(array(array(array(array(false)))))));
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array("Hello World"))))), array(array(array(array(array(array("Hello World")))))));
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array("bacon"))))), array(array(array(array(array(array("bacon")))))));
+        $GLOBALS['test']->assert_not_similar(array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", array(), true
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ), array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ));
+        $GLOBALS['test']->assert_not_similar(array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ), array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random val",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ));
+        $GLOBALS['test']->assert_not_similar(array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, 23, 45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ), array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ));
+        $GLOBALS['test']->assert_not_similar(array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "extra key" => "extra value",
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"), array(), array(1, 2, 3))
+        ), array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ));
+      });
+      $GLOBALS['test']->it("should work for passing tests with a custom message", function () {
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array())))), array(array(array(array(array(array()))))), "Final Tests Failed");
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(1))))), array(array(array(array(array(array(1)))))), "Final Tests Failed");
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(0))))), array(array(array(array(array(array(0)))))), "Final Tests Failed");
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(true))))), array(array(array(array(array(array(true)))))), "Final Tests Failed");
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(false))))), array(array(array(array(array(array(false)))))), "Final Tests Failed");
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array("Hello World"))))), array(array(array(array(array(array("Hello World")))))), "Final Tests Failed");
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array("bacon"))))), array(array(array(array(array(array("bacon")))))), "Final Tests Failed");
+        $GLOBALS['test']->assert_not_similar(array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", array(), true
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ), array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ), "Final Tests Failed");
+        $GLOBALS['test']->assert_not_similar(array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ), array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random val",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ), "Final Tests Failed");
+        $GLOBALS['test']->assert_not_similar(array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, 23, 45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ), array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ), "Final Tests Failed");
+        $GLOBALS['test']->assert_not_similar(array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "extra key" => "extra value",
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"), array(), array(1, 2, 3))
+        ), array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ), "Final Tests Failed");
+      });
+    });
 
+    echo "<br />";
+
+    $test = new Test;
+    $test->describe('$test->assert_not_similar($actual, $expected[, $msg])', function () {
+      $GLOBALS['test']->it("should work for failing tests with the default message", function () {
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array())))), array(array(array(array(array())))));
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(1))))), array(array(array(array(array(1))))));
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(0))))), array(array(array(array(array(0))))));
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(true))))), array(array(array(array(array(true))))));
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(false))))), array(array(array(array(array(false))))));
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array("Hello World"))))), array(array(array(array(array("Hello World"))))));
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array("bacon"))))), array(array(array(array(array("bacon"))))));
+        $GLOBALS['test']->assert_not_similar(array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ), array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ));
+      });
+      $GLOBALS['test']->it("should work for failing tests with a custom message", function () {
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array())))), array(array(array(array(array())))), "FINAL TESTS FAILED");
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(1))))), array(array(array(array(array(1))))), "FINAL TESTS FAILED");
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(0))))), array(array(array(array(array(0))))), "FINAL TESTS FAILED");
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(true))))), array(array(array(array(array(true))))), "FINAL TESTS FAILED");
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array(false))))), array(array(array(array(array(false))))), "FINAL TESTS FAILED");
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array("Hello World"))))), array(array(array(array(array("Hello World"))))), "FINAL TESTS FAILED");
+        $GLOBALS['test']->assert_not_similar(array(array(array(array(array("bacon"))))), array(array(array(array(array("bacon"))))), "FINAL TESTS FAILED");
+        $GLOBALS['test']->assert_not_similar(array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ), array(
+          1,
+          3,
+          5,
+          7,
+          8,
+          "random key" => "random value",
+          67,
+          69,
+          733,
+          "another key" => "another value",
+          "a nested array" => array(1, 2, 3, 5, 8, 10),
+          "another nested array" => array(
+            "key" => "value",
+            "another key" => "another value",
+            "yet another key" => "value",
+            true,
+            false,
+            1,
+            0,
+            array(
+              3, 4, 5, -23, -45, false, "Hello World", true, array()
+            ),
+            "random string"
+          ),
+          "finally" => array(array(3, 1, 5), array("Hello", "World", "key" => "value"))
+        ), "FINAL TESTS FAILED");
+      });
+    });
     ?>
   </body>
 </html>

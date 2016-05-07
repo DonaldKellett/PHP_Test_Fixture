@@ -83,6 +83,17 @@ class Test {
       return false;
     }
   }
+  public function assert_not_similar($actual, $expected, $msg = "Test Failed") {
+    if (!$this->check_similar($actual, $expected)) {
+      $this->passes++;
+      echo "<span style='color:lime'>Test Passed - Value !== $expected</span><br />";
+      return true;
+    } else {
+      $this->fails++;
+      echo "<span style='color:red'>$msg - Algorithm should not have returned: $expected</span><br />";
+      return false;
+    }
+  }
   protected function check_similar($actual, $expected) {
     if (!is_array($expected) || !is_array($actual)) return $actual === $expected;
     foreach ($expected as $key => $value) {
