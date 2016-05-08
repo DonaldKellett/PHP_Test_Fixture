@@ -9,13 +9,22 @@
 
 PHP Test Fixture Version II is finally here!  The PHP Test Fixture (as authored by [DonaldKellett](https://github.com/DonaldKellett)) is a simple and minimalistic test fixture programmed in the PHP scripting language for use by PHP developers to check their code and algorithms efficiently and effectively.
 
-Version II of this test fixture (the newest released version as of the time of writing) includes a few new surprises:
+Version II of this test fixture includes a few new surprises:
 
 1. The ability to expect an error and no error to be thrown from the tested function/algorithm/code by using the ```expect_error``` and ```expect_no_error``` methods in your test fixture respectively.
 2. The ability to effectively group and style your test cases properly with the ```describe``` and ```it``` methods
 3. The ability to generate random numbers and strings for random testing (should you need it) using the ```random_number``` and ```random_token``` methods respectively
 
 ... and **enhanced** feedback messages for both ```assert_equals``` and ```assert_not_equals``` upon both success and failure.
+
+### v2.1.0 Update
+
+From ```v2.1.0``` onwards, the following additional features are also available for use:
+
+1. ```assert_similar```
+2. ... and ```assert_not_similar```
+
+Both can be used for the direct comparison of arrays.  Kindly refer to the Documentation below for more details.
 
 ## Documentation
 
@@ -55,6 +64,8 @@ $test->expect(1, "Was expecting a truthy value here"); // Test Passed
 
 #### assert_equals
 
+*Note: ```assert_equals``` only works with primitive data types such as **strings, numbers and booleans**.  It may not work properly when comparing arrays or objects.  See ```assert_similar``` for array comparison.*
+
 This method accepts the following arguments in the following order.  Any arguments in square brackets ```[]``` are optional.
 
 ```php
@@ -83,6 +94,8 @@ $test->assert_equals(multiply(4, 4), 16); // Value did not match expected - Expe
 
 #### assert_not_equals
 
+*Note: ```assert_not_equals``` only works with primitive data types such as **strings, numbers and booleans**.  It may not work properly when comparing arrays or objects.  See ```assert_not_similar``` for array comparison.*
+
 ```php
 $test->assert_not_equals($actual, $expected[, $msg]);
 ```
@@ -99,6 +112,30 @@ function multiply(a, b) {
 // Here we try to make sure the function is returning the product of two numbers, not the exponentation of two numbers
 $test->assert_not_equals(multiply(4, 4), 256); // Test Passed - Value !== 256
 ```
+
+#### assert_similar (```v2.1.0```+)
+
+##### Syntax
+
+```php
+$test->assert_similar($actual, $expected[, $msg]);
+```
+
+##### Usage
+
+```assert_similar``` is best used to directly compare arrays.  It works for both ordinary arrays **and** associative arrays.  It **can** also be used to compare primitive values (such as strings, numbers and booleans) but ```assert_equals``` can do the job as well.
+
+#### assert_not_similar (```v2.1.0```+)
+
+##### Syntax
+
+```php
+$test->assert_not_similar($actual, $expected[, $msg]);
+```
+
+##### Usage
+
+```assert_not_similar``` is best used to directly compare arrays.  It works for both ordinary arrays **and** associative arrays.  It **can** also be used to compare primitive values (such as strings, numbers and booleans) but ```assert_not_equals``` can do the job as well.
 
 #### expect_error
 
@@ -117,6 +154,10 @@ $test->expect_no_error($msg, $fn);
 ```
 
 Basically the opposite of ```expect_error``` - a test is passed if no error is thrown.  If an error is thrown, the test is failed.  Again, the ```$msg``` parameter is **required** in this case.
+
+### A note regarding return values of assertion methods
+
+Please note that **all assertion methods above** return ```true``` if a test is passed; ```false``` otherwise.  This means that you can use the assertion methods above in your control flow should you want to perform custom actions depending on whether a particular test case (or a particular group of test cases) has been passed.  For example, you may want to withhold certain test cases until a particular test case is passed.  Kindly refer to the Summarization methods below for more methods related to control flow.
 
 ### Grouping/Styling Methods
 
@@ -158,6 +199,60 @@ $test->describe("Description Here", function () {
 ```
 
 Again, ```$description``` is a string detialing what is tested while ```$tests``` are the tests to be executed in the anonymous function.
+
+### Summarization
+
+#### summarize
+
+The ```$test->summarize``` method accepts no arguments.
+
+##### Syntax
+
+```php
+$test->summarize();
+```
+
+##### Usage
+
+This method is used to print a summary of the tests that have been executed.  The summmary will be of the following format:
+
+```
+37 Passed
+0 Failed
+Algorithm Passed
+```
+
+Please note that if you are already using ```$test->describe``` and ```$test->it``` to wrap your test cases you **do NOT** need to use ```$test->summarize``` to summarize your test cases as it is **automatically** done for you in the ```$test->describe``` block.
+
+#### get_passes (```v2.0.2```+)
+
+```get_passes``` accepts no arguments, like such:
+
+```php
+$test->get_passes();
+```
+
+It returns the number of passes in a particular test which may be useful to include in your control flow if you want to perform custom actions depending on how many test cases the user has passed, for example.
+
+#### get_fails (```v2.0.2```+)
+
+```get_fails``` accepts no arguments, like such:
+
+```php
+$test->get_fails();
+```
+
+It returns the number of fails in a particular test which may be useful to include in your control flow if you want to perform custom actions depending on how many test cases the user has failed, for example.
+
+#### algorithm_passed (```v2.0.2```+)
+
+```algorithm_passed``` accepts no arguments, like such:
+
+```php
+$test->algorithm_passed();
+```
+
+It returns ```true``` if the user has passed **all** test cases; ```false``` otherwise.  It may be useful to include it in your control flow if you want to perform custom actions depending on whether a user has passed all test cases provided by you.
 
 ### Miscellaneous
 
