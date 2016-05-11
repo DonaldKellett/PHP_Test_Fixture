@@ -17,22 +17,22 @@ class Test {
   public function assert_equals($actual, $expected, $msg = "Value did not match expected") {
     if ($actual === $expected) {
       $this->passes++;
-      echo "<span style='color:lime'>Test Passed - Value === $expected</span><br />";
+      echo "<span style='color:lime'>Test Passed - Value === " . $this->display($expected) . "</span><br />";
       return true;
     } else {
       $this->fails++;
-      echo "<span style='color:red'>$msg - Expected: $expected, but instead got: $actual</span><br />";
+      echo "<span style='color:red'>$msg - Expected: " . $this->display($expected) . ", but instead got: " . $this->display($actual) . "</span><br />";
       return false;
     }
   }
   public function assert_not_equals($actual, $expected, $msg = "Test Failed") {
     if ($actual !== $expected) {
       $this->passes++;
-      echo "<span style='color:lime'>Test Passed - Value !== $expected</span><br />";
+      echo "<span style='color:lime'>Test Passed - Value !== " . $this->display($expected) . "</span><br />";
       return true;
     } else {
       $this->fails++;
-      echo "<span style='color:red'>$msg - Algorithm should not have returned: $expected</span><br />";
+      echo "<span style='color:red'>$msg - Algorithm should not have returned: " . $this->display($expected) . "</span><br />";
       return false;
     }
   }
@@ -75,22 +75,22 @@ class Test {
   public function assert_similar($actual, $expected, $msg = "Actual value did not match Expected") {
     if ($this->check_similar($actual, $expected)) {
       $this->passes++;
-      echo "<span style='color:lime'>Test Passed - Value === $expected</span><br />";
+      echo "<span style='color:lime'>Test Passed - Value === " . $this->display($expected) . "</span><br />";
       return true;
     } else {
       $this->fails++;
-      echo "<span style='color:red'>$msg - Expected: $expected, but instead got: $actual</span><br />";
+      echo "<span style='color:red'>$msg - Expected: " . $this->display($expected) . ", but instead got: " . $this->display($actual) . "</span><br />";
       return false;
     }
   }
   public function assert_not_similar($actual, $expected, $msg = "Test Failed") {
     if (!$this->check_similar($actual, $expected)) {
       $this->passes++;
-      echo "<span style='color:lime'>Test Passed - Value !== $expected</span><br />";
+      echo "<span style='color:lime'>Test Passed - Value !== " . $this->display($expected) . "</span><br />";
       return true;
     } else {
       $this->fails++;
-      echo "<span style='color:red'>$msg - Algorithm should not have returned: $expected</span><br />";
+      echo "<span style='color:red'>$msg - Algorithm should not have returned: " . $this->display($expected) . "</span><br />";
       return false;
     }
   }
@@ -122,6 +122,22 @@ class Test {
     echo "<div style='margin-left:20px'>";
     $tests();
     echo "</div>";
+  }
+  protected function display($value) {
+    if ($value === true) return "true";
+    if ($value === false) return "false";
+    if ($value === NULL) return "NULL";
+    if (is_string($value)) return '"' . htmlspecialchars($value) . '"';
+    if (!is_array($value)) return $value;
+    if (count($value) === 0) return "array()";
+    $result = "array(";
+    $result .= "<div style='margin-left:20px'>";
+    $result .= implode(",<br />", array_map(function ($key, $val) {
+      return $this->display($key) . " => " . $this->display($val);
+    }, array_keys($value), $value));
+    $result .= "</div>";
+    $result .= ")";
+    return $result;
   }
   public function random_number() {
     return rand(0, 100);
