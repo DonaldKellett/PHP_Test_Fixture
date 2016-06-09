@@ -1,5 +1,7 @@
 # PHP Test Fixture
 
+[![Join the chat at https://gitter.im/DonaldKellett/PHP_Test_Fixture](https://badges.gitter.im/DonaldKellett/PHP_Test_Fixture.svg)](https://gitter.im/DonaldKellett/PHP_Test_Fixture?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Version Details
 
 - Current Version: ```v2.1.1```
